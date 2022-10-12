@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     });
 
   }
-  res.json(products)
+  res.status(302).json(products)
 });
 
 router.get('/filter', (req, res) => {
@@ -26,23 +26,29 @@ router.get('/filter', (req, res) => {
 }); // esto es un endpoint especifico
 
 router.get('/:id', (req, res) =>{
-  const productId = req.params.id;
-  res.json(
-    {
-      productId,
-      name: 'Product 2',
-      price: 800,
-      images: [
-        'https://youtub.com',
-        'https://loci.com'
-      ]
-    }
-    );
+  const { id } = req.params;
+  if( id === '100' ){
+    res.status(404).json({
+      message: 'NoT fOuNd 8) ¡¡'
+    });
+  }else{
+    res.status(302).json(
+      {
+        id,
+        name: 'Product 2',
+        price: 800,
+        images: [
+          'https://youtub.com',
+          'https://loci.com'
+        ]
+      }
+      );
+  }
   });// esto es un endopoint dinámico
 
   router.post('/', (req, res) => {
     const body = req.body;
-    res.json({
+    res.status(201).json({
       message: 'Created',
       data: body
     }
@@ -52,21 +58,37 @@ router.get('/:id', (req, res) =>{
   router.patch('/:id', (req, res) => {
     const { id } = req.params;
     const body = req.body;
-    res.json({
-      message: 'Updated partial',
-      data: body,
-      id: id,
+
+    if(id === '100'){
+      res.status(304).json({
+        message: 'Not modified',
+        id,
+      });
+    }else{
+      res.status(202).json({
+        message: 'Updated partial accepted',
+        data: body,
+        id,
+      });
     }
-    );
+
   });
 
   router.delete('/:id', (req, res) => {
     const { id } = req.params;
-    res.json({
-      message: 'Deleted',
-      id: id,
+
+    if(id === '100'){
+      res.status(404).json({
+        message: 'Product Not found',
+        id,
+      });
+    }else{
+      res.status(202).json({
+        message: 'Product Deleted permanently',
+        id,
+      });
     }
-    );
+
   });
 
   module.exports = router;
