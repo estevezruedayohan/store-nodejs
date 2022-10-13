@@ -1,94 +1,47 @@
 const express = require('express');
-const faker = require('faker');
+const ProductsService = require('../services/products.service');
 
 const router = express.Router();
+const service = new ProductsService();
 
+/** Método LISTAR todos los productos */
 router.get('/', (req, res) => {
-  const products = [];
-  const { size, offSet } = req.query;
-  const limit = size || 100;
-  // const offset = offSet || 1 ; // aqui no se verá el resultado del offset
-  // debido a que products viene de una array vacio
-
-  for (let i = 0; i < limit; i++) {
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      images: faker.image.imageUrl(),
-    });
-
-  }
-  res.status(302).json(products)
+  const products = service.find();
+  res.json(products)
 });
 
+/** Método FILTRAR productos - no implementado aún */
 router.get('/filter', (req, res) => {
   res.send('Esto es un filtro');
 }); // esto es un endpoint especifico
 
+/** Método MOSTRAR UN PRODUCTO */
 router.get('/:id', (req, res) =>{
   const { id } = req.params;
-  if( id === '100' ){
-    res.status(404).json({
-      message: 'NoT fOuNd 8) ¡¡'
-    });
-  }else{
-    res.status(302).json(
-      {
-        id,
-        name: 'Product 2',
-        price: 800,
-        images: [
-          'https://youtub.com',
-          'https://loci.com'
-        ]
-      }
-      );
-  }
-  });// esto es un endopoint dinámico
+  const product = service.findOne(id);
+  res.json(product);
+});// esto es un endopoint dinámico
 
-  router.post('/', (req, res) => {
-    const body = req.body;
-    res.status(201).json({
-      message: 'Created',
-      data: body
-    }
-    );
-  });
+/** Método CREAR UN PRODUCTO todos los productos */
+router.post('/', (req, res) => {
+  const body = req.body;
+  const respuesta = service.create(body);
+  res.json(respuesta);
+});
 
-  router.patch('/:id', (req, res) => {
-    const { id } = req.params;
-    const body = req.body;
+/** Método ACTUALIZAR un producto */
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body
+  const product = service.update(id, body);
+  res.json(product);
+});
 
-    if(id === '100'){
-      res.status(304).json({
-        message: 'Not modified',
-        id,
-      });
-    }else{
-      res.status(202).json({
-        message: 'Updated partial accepted',
-        data: body,
-        id,
-      });
-    }
-
-  });
-
-  router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-
-    if(id === '100'){
-      res.status(404).json({
-        message: 'Product Not found',
-        id,
-      });
-    }else{
-      res.status(202).json({
-        message: 'Product Deleted permanently',
-        id,
-      });
-    }
-
-  });
+/** Método BORRAR un producto */
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  const message = service.delete(id);
+  res.json(message);
+});
 
   module.exports = router;
