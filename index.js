@@ -4,7 +4,7 @@ const cors = require('cors');
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler')
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // que asigne una variable de entorno
 
 app.use(express.json()); // middleware
 
@@ -17,7 +17,7 @@ const whiteList = [
 
 const options = {
   origin: (origin, callback) => {
-    if(whiteList.includes(origin)){
+    if(whiteList.includes(origin) || !origin){ // para acepyar el mismo origin
       callback(null, true);
     }else{
       callback(new Error('Acceso no permitido'));
