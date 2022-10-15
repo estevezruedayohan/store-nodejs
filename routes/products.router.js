@@ -5,9 +5,15 @@ const router = express.Router();
 const service = new ProductsService();
 
 /** Método LISTAR todos los productos */
-router.get('/', (req, res) => {
-  const products = service.find();
-  res.json(products)
+router.get('/', async (req, res) => {
+  try {
+    const products = await service.find();
+    res.json(products);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 });
 
 /** Método FILTRAR productos - no implementado aún */
@@ -16,32 +22,56 @@ router.get('/filter', (req, res) => {
 }); // esto es un endpoint especifico
 
 /** Método MOSTRAR UN PRODUCTO */
-router.get('/:id', (req, res) =>{
+router.get('/:id', async (req, res) =>{
   const { id } = req.params;
-  const product = service.findOne(id);
-  res.json(product);
+  try {
+    const product = await service.findOne(id);
+    res.json(product);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 });// esto es un endopoint dinámico
 
 /** Método CREAR UN PRODUCTO todos los productos */
-router.post('/', (req, res) => {
-  const body = req.body;
-  const respuesta = service.create(body);
-  res.json(respuesta);
+router.post('/', async (req, res) => {
+  try {
+    const body = req.body;
+    const respuesta = await service.create(body);
+    res.json(respuesta);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message
+    });
+  }
 });
 
 /** Método ACTUALIZAR un producto */
-router.patch('/:id', (req, res) => {
-  const { id } = req.params;
-  const body = req.body
-  const product = service.update(id, body);
-  res.json(product);
+router.patch('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body
+    const product = await service.update(id, body);
+    res.json(product);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 });
 
 /** Método BORRAR un producto */
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  const message = service.delete(id);
-  res.json(message);
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const message = await service.delete(id);
+    res.json(message);
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 });
 
   module.exports = router;

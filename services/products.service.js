@@ -20,6 +20,11 @@ class ProductsService {
   }
 
   async create(data){
+    const { name, price, image } = data;
+    if (name === undefined || price === undefined || image === undefined
+      || name === '' || price === '' || image === ''){
+      throw new Error('Producto no fue posible crearlo, falta un parametro');
+    }
     const newProduct = {
       id: faker.datatype.uuid(),
       ...data
@@ -33,7 +38,11 @@ class ProductsService {
   }
 
   async findOne(id){
-    return this.products.find(element => element.id === id);
+    const content = this.products.find(element => element.id === id);
+    if(content === undefined){
+      throw new Error('Producto no se encuentra en la base de datos');
+    }
+    return content;
   }
 
   async update(id, body){
@@ -52,7 +61,7 @@ class ProductsService {
   async delete(id){
     const index = this.products.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Producto no encontrado');
+      throw new Error('Producto no encontrado, no fue posible su borrado');
     }
     this.products.splice(index, 1);
     return { id };
