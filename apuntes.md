@@ -51,4 +51,8 @@
  se ajusta en el archivo de routing para el manejo de los errores invocandolos en un tray catch y agregando un next en los parámetros de la función de entrada que se invoca
 - Se instala la libreria boom npm i @hapi/boom
 - se invoca boom en los servicios (clases) y se maneja con esta los errores
-- 
+- Se instala la libreria Joi npm i joi para validación de datos
+- Se crea una carpeta dónde vivirá estos esquemas, se crea el archivo para cada  clase que se va a usar en el app (products.schema.js....)
+- Se importa en products.schema y se configura los parámetros de entrada
+- Se crean los schemas para cada acción del crud por servicio
+- Se crea un archivo validador en middleware y se crea el middleware en este.
