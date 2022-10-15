@@ -56,3 +56,9 @@
 - Se importa en products.schema y se configura los parámetros de entrada
 - Se crean los schemas para cada acción del crud por servicio
 - Se crea un archivo validador en middleware y se crea el middleware en este.
+- Se agregan estos middleware en el archivo de routers, como funciones callbacks de acuerdo a su función.
+- Se configura el validador y los schemas para que validen adecuadamente las entradas a las clases
+- Se instla libreria cors
+- se empieza a usar en el indez js de la app
+- Se configura la isntancia de cors con las opciones, se crea la lista de los dominiso que tendrán acceso al backend
+- 
