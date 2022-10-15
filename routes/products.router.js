@@ -22,15 +22,16 @@ router.get('/filter', (req, res) => {
 }); // esto es un endpoint especifico
 
 /** Método MOSTRAR UN PRODUCTO */
-router.get('/:id', async (req, res) =>{
-  const { id } = req.params;
+router.get('/:id', async (req, res, next) =>{
   try {
+    const { id } = req.params;
     const product = await service.findOne(id);
     res.json(product);
   } catch (error) {
-    res.status(404).json({
-      message: error.message
-    });
+    next(error);
+    // res.status(404).json({
+    // message: error.message
+    // });
   }
 });// esto es un endopoint dinámico
 

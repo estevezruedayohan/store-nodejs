@@ -38,11 +38,13 @@ class ProductsService {
   }
 
   async findOne(id){
-    const content = this.products.find(element => element.id === id);
-    if(content === undefined){
-      throw new Error('Producto no se encuentra en la base de datos');
-    }
-    return content;
+    // const name = this.getTotal();
+    return this.products.find(element => element.id === id);
+    // const content = this.products.find(element => element.id === id);
+    // if(content === undefined){
+    //   throw new Error('Producto no se encuentra en la base de datos');
+    // }
+    // return content;
   }
 
   async update(id, body){

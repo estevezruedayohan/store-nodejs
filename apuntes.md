@@ -43,3 +43,9 @@
 - se separa el código de routing del punto de ingreso de la app a los archivos antes creados.
 - Se utiliza insomnia para probar los metodos
 - se agrega el middleware a express en el archivo de entrada de la app (app.use(express.json())) para que interprete el cuerpo en formato json que es generado en el server. 
+- se separan los router por cada destino llevando las funciones a cada uno de ellos
+- Se crea por cada router una clase/servicio que manejará la lógica del manejo de los datos.
+- Se ajustan los métodos de las clases de tal forma que se puedan manejar los errores en cada una de ellas y ser capturados try catch y que los router brinden mensajes al servidor.
+ - Se crean los middlewares para manejo de errores
+ - Se importan en el archivo de entrada de la app index.js y se ejecutan en orden y despues del llamado al router(app)
+ se ajusta en el archivo de routing para el manejo de los errores invocandolos en un tray catch y agregando un next en los parámetros de la función de entrada que se invoca
