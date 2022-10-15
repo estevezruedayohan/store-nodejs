@@ -1,4 +1,5 @@
 const faker = require('faker');
+const boom = require('@hapi/boom');
 
 class ProductsService {
 
@@ -15,15 +16,16 @@ class ProductsService {
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price(), 10),
         images: faker.image.imageUrl(),
+        isBlock: faker.datatype.boolean(),
       });
     }
   }
 
   async create(data){
     const { name, price, image } = data;
-    if (name === undefined || price === undefined || image === undefined
+    if (!name || !price || !image
       || name === '' || price === '' || image === ''){
-      throw new Error('Producto no fue posible crearlo, falta un parametro');
+      throw boom.forbidden('Producto NO FUE CREADO - FALTAN PARAMETROS');
     }
     const newProduct = {
       id: faker.datatype.uuid(),
@@ -34,23 +36,28 @@ class ProductsService {
   }
 
   async find(){
-    return this.products;
+    const products = this.products;
+    if(!products){
+      throw boom.notFound('Productos NO ENCONTRADOS - FIND ALL');
+    }
+    return products;
   }
 
   async findOne(id){
-    // const name = this.getTotal();
-    return this.products.find(element => element.id === id);
-    // const content = this.products.find(element => element.id === id);
-    // if(content === undefined){
-    //   throw new Error('Producto no se encuentra en la base de datos');
-    // }
-    // return content;
+    const product = this.products.find(element => element.id === id);
+    if(!product){
+      throw boom.notFound('Producto NO ENCONTRADO - FIND ONE BY ID');
+    }
+    if(product.isBlock){
+      throw boom.conflict('Producto BLOQUEADO - FIND ONE BY ID');
+    }
+    return product;
   }
 
   async update(id, body){
     const index = this.products.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Producto no encontrado');
+      throw boom.notFound('Producto NO ENCONTRADO - UPDATE');
     }
     const product = this.products[index];
     this.products[index] = {
@@ -63,7 +70,7 @@ class ProductsService {
   async delete(id){
     const index = this.products.findIndex(item => item.id === id);
     if(index === -1){
-      throw new Error('Producto no encontrado, no fue posible su borrado');
+      throw boom.notFound('Producto NO ENCONTRADO - DELETE');
     }
     this.products.splice(index, 1);
     return { id };

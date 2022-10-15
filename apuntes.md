@@ -49,3 +49,6 @@
  - Se crean los middlewares para manejo de errores
  - Se importan en el archivo de entrada de la app index.js y se ejecutan en orden y despues del llamado al router(app)
  se ajusta en el archivo de routing para el manejo de los errores invocandolos en un tray catch y agregando un next en los parámetros de la función de entrada que se invoca
+- Se instala la libreria boom npm i @hapi/boom
+- se invoca boom en los servicios (clases) y se maneja con esta los errores
+- 

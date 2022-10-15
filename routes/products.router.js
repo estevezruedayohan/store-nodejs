@@ -5,14 +5,12 @@ const router = express.Router();
 const service = new ProductsService();
 
 /** Método LISTAR todos los productos */
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const products = await service.find();
     res.json(products);
   } catch (error) {
-    res.status(404).json({
-      message: error.message
-    });
+    next(error);
   }
 });
 
@@ -29,49 +27,40 @@ router.get('/:id', async (req, res, next) =>{
     res.json(product);
   } catch (error) {
     next(error);
-    // res.status(404).json({
-    // message: error.message
-    // });
   }
 });// esto es un endopoint dinámico
 
 /** Método CREAR UN PRODUCTO todos los productos */
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const body = req.body;
     const respuesta = await service.create(body);
     res.json(respuesta);
   } catch (error) {
-    res.status(400).json({
-      message: error.message
-    });
+    next(error);
   }
 });
 
 /** Método ACTUALIZAR un producto */
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body
     const product = await service.update(id, body);
     res.json(product);
   } catch (error) {
-    res.status(404).json({
-      message: error.message
-    });
+    next(error);
   }
 });
 
 /** Método BORRAR un producto */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const message = await service.delete(id);
     res.json(message);
   } catch (error) {
-    res.status(404).json({
-      message: error.message
-    });
+    next(error);
   }
 });
 
