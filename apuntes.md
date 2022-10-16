@@ -60,5 +60,11 @@
 - Se configura el validador y los schemas para que validen adecuadamente las entradas a las clases
 - Se instla libreria cors
 - se empieza a usar en el indez js de la app
-- Se configura la isntancia de cors con las opciones, se crea la lista de los dominiso que tendrán acceso al backend
-- 
+- Se configura la isntancia de cors con las opciones, se crea la lista de los dominios que tendrán acceso al backend
+
+## Manejo de docker
+
+- Se instala docker-compose
+- Se agrega el archivo yml que será la configuración del contenedor - se especifica el path que indica la pagina hub.docker.com para esta imagen
+- Se crea la carpeta dónde se alojará la data (bd - postgres)
+- Se corre el servicio docker-compose up -d postgres
