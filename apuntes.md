@@ -113,4 +113,16 @@ CREATE TABLE products(
   ]  
 
 - Modificar los servicios por cada tabla (pendiente users, facturas, etc)
+- Creamos las variables de ambiente para no exponer nuestras credenciales
+  - creamos la carpeta config
+  - creamos el archivo config.js
+- Creamos el archivo .env y .env.example para crear las variables de entorno
+- instalamos libreria dotenv que carga las variables de env y las carga en el entorno de node npm i dotenv
+- requerimos dotenv en config.js para que cargue las variables de entorno.
+- Probamos con insomnia que la aplicación funcione con las varaibles de entorno haciendo un get products
 
+#### tareas por hacer 
+[] Hacer los esquemas de validacion para las otras tablas
+[] Construir los servicios para las otras tablas
+[] Construir los router para las otras tablas
+[] Modificar los archivos que usen el getconection()

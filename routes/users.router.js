@@ -7,7 +7,6 @@ const router = express.Router();
 const service = new UserService();
 
 router.get('/', async (req, res, next) => {
-  console.log('estoy en users router');
   try {
     const users = await service.find();
     console.log(users);
