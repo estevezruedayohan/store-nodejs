@@ -121,6 +121,16 @@ CREATE TABLE products(
 - requerimos dotenv en config.js para que cargue las variables de entorno.
 - Probamos con insomnia que la aplicación funcione con las varaibles de entorno haciendo un get products
 
+### ORM
+- Instalar la libreria sequialize para manejo de orm
+- Instalar las librerías de postgres (ya que es la bd que vamos a usar) - ver documentacion sequialize.org
+- Crear en la carpeta libs un archivo de sequalize dónde se inice la conexión, nos ayudmos con el código que escribimos en la librería de postgres.pool
+- Probamos la librería sequialize en product.services
+- cambiamos las consultas query por sequialize (invocar la librería)
+- Desestructuramos la data
+- Probamos en insomnia
+
+
 #### tareas por hacer 
 [] Hacer los esquemas de validacion para las otras tablas
 [] Construir los servicios para las otras tablas
