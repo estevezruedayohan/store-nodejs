@@ -139,6 +139,14 @@ CREATE TABLE products(
 - Se prueba con insomnia
 - crear el crud para cada servicio - ej user
 
+## Practica de cambio de bd a Mysql
+- modificamos el docker-compose para que lea la imagen de Mysql:8 y phpmyadmin, recordar que el password es para el usuario root, por lo que la variable MYSQL_USER debe ser root. 
+- instalamos el driver de mysql para que lo lea node npm i --save mysql2
+- Se cambia termporalmente el DB_PORT variable de entorno en .env para que se conecte a mysql (el puerto que se configuró en docker-compose para este servicio), y el usuario DB_USER a root
+- cambiar en sequelize.js el dialecto a mysql y la URI de conexion
+
+
+
 
 #### tareas por hacer 
 [] Hacer los esquemas de validacion para las otras tablas
