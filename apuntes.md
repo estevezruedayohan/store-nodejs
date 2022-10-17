@@ -144,8 +144,14 @@ CREATE TABLE products(
 - instalamos el driver de mysql para que lo lea node npm i --save mysql2
 - Se cambia termporalmente el DB_PORT variable de entorno en .env para que se conecte a mysql (el puerto que se configuró en docker-compose para este servicio), y el usuario DB_USER a root
 - cambiar en sequelize.js el dialecto a mysql y la URI de conexion
+- se prueba en insomnia el crud
 
-
+### Migraciones de bases de datos con sequelize orm
+- La migración se asemeja a un control de versiones
+- Se instala la libreria sequelize-cli como dependencia de desarrollo npm i sequelize-cli --save-dev
+- Agregamos un archivo en la raíz del proyecto que será la configuración de sequelize denominado .sequelizerc, este nos permitirá correr un sistema de migraciones, se ocnfigura dónde están los sets de datos, dónde serán guardadas todas las migraciones que se van a generar.
+- Creamos en db dos carpetas seeders y migrations y un archivo config.js cuya configuración se reutilizará algnas lineas de sequelize , se exporta por modulo las dos configuraciones para desarrollo y la otra para producción(aún no terminada).
+- 
 
 
 #### tareas por hacer 
