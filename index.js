@@ -1,7 +1,7 @@
 const express = require('express');
 const routerApi = require('./routes');
 const cors = require('cors');
-const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler')
+const { logErrors, errorHandler, boomErrorHandler, ormErrorHanlder } = require('./middlewares/error.handler')
 
 const app = express();
 const port = process.env.PORT || 3000; // que asigne una variable de entorno
@@ -30,6 +30,7 @@ app.use(cors(options));
 routerApi(app);
 
 app.use(logErrors); // los middleware deben ir luego del routerApi
+app.use(ormErrorHanlder);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 

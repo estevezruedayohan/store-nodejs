@@ -137,6 +137,7 @@ CREATE TABLE products(
 ### Incorporar orm en los endpoints o services
 - Se incorpora models en users.services.js y se empieza a cambiar con los métodos que posee finAll
 - Se prueba con insomnia
+- crear el crud para cada servicio - ej user
 
 
 #### tareas por hacer 

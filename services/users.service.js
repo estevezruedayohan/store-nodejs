@@ -12,38 +12,35 @@ class UserService{
   }
 
   async create(data){
-    return data;
+    const newUser = await models.User.create(data);
+    return newUser;
   }
 
   async find(){
     const rta = await models.User.findAll();
-
-    // const rta = await this.pool.query(query);
-    // if(rta.rowCount === 0){
-    //   throw boom.notFound('LISTA VACIA - FIND ALL');
-    // }
+    if(!rta){
+      throw boom.notFound('LISTA VACIA - FIND ALL');
+    }
     return rta;
   }
 
   async findOne(id){
-    const query = `SELECT * FROM task WHERE id = ${id}`;
-    const rta = await this.pool.query(query);
-
-    if(rta.rowCount === 0){
-      throw boom.notFound('Usuario NO ENCONTRADO - FIND BY ID');
+    const user = await models.User.findByPk(id);
+    if(!user){
+      throw boom.notFound('USER NOT FOUND');
     }
-
-    return rta.rows;
+    return user;
   }
 
   async update(id, changes){
-    return{
-      id,
-      changes,
-    };
+    const user = await this.findOne(id);
+    const rta = await user.update(changes);
+    return rta;
   }
 
-  async detele(id){
+  async delete(id){
+    const user = await this.findOne(id);
+    await user.destroy(id);
     return { id };
   }
 
