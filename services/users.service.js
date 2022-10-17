@@ -1,5 +1,7 @@
 const boom = require('@hapi/boom');
 const pool = require('../libs/postgres.pool');
+const { models } = require('../libs/sequelize');
+
 
 const getConnection = require('../libs/postgres');
 
@@ -14,12 +16,13 @@ class UserService{
   }
 
   async find(){
-    const query = 'SELECT * FROM task';
-    const rta = await this.pool.query(query);
-    if(rta.rowCount === 0){
-      throw boom.notFound('LISTA VACIA - FIND ALL');
-    }
-    return rta.rows;
+    const rta = await models.User.findAll();
+
+    // const rta = await this.pool.query(query);
+    // if(rta.rowCount === 0){
+    //   throw boom.notFound('LISTA VACIA - FIND ALL');
+    // }
+    return rta;
   }
 
   async findOne(id){

@@ -122,13 +122,21 @@ CREATE TABLE products(
 - Probamos con insomnia que la aplicación funcione con las varaibles de entorno haciendo un get products
 
 ### ORM
-- Instalar la libreria sequialize para manejo de orm
-- Instalar las librerías de postgres (ya que es la bd que vamos a usar) - ver documentacion sequialize.org
+- Instalar la libreria sequilize para manejo de orm
+- Instalar las librerías de postgres (ya que es la bd que vamos a usar) - ver documentacion sequilize.org
 - Crear en la carpeta libs un archivo de sequalize dónde se inice la conexión, nos ayudmos con el código que escribimos en la librería de postgres.pool
-- Probamos la librería sequialize en product.services
-- cambiamos las consultas query por sequialize (invocar la librería)
+- Probamos la librería sequilize en product.services
+- cambiamos las consultas query por sequilize (invocar la librería)
 - Desestructuramos la data
 - Probamos en insomnia
+- Creamos una carpeta de db/models dónde se construiran las clases de las tablas para el uso en los orm
+- En los archivos de los modelos se requiere la libresería secualize {Model, DataTypes, Sequelize}, se crea  el esquema de los campos que tendrán cada tabla y se crea la clase extendida de Models, se exporta las variables y clase
+- se crea un archivo index.js que será el punto de partida para enviar los modelos
+- Una vez guardado los cambios revisamos pgadmin para ver que se creó la tabla tal y como se planteó en el modelo
+
+### Incorporar orm en los endpoints o services
+- Se incorpora models en users.services.js y se empieza a cambiar con los métodos que posee finAll
+- Se prueba con insomnia
 
 
 #### tareas por hacer 
@@ -136,3 +144,7 @@ CREATE TABLE products(
 [] Construir los servicios para las otras tablas
 [] Construir los router para las otras tablas
 [] Modificar los archivos que usen el getconection()
+[] Cambiar los servicios por sequialize
+[] Crear los modelos para las tablas productos, ordenes de compra, usuarios, clientes, categorias, marcas.
+[] Buscar manejo de errores con boom
+

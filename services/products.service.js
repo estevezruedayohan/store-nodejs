@@ -1,7 +1,7 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
 const pool = require('../libs/postgres.pool');
-const sequialize = require('../libs/sequialize');
+const sequelize = require('../libs/sequelize');
 
 class ProductsService {
 
@@ -42,7 +42,7 @@ class ProductsService {
   async find(){
     const query = 'SELECT * FROM products';
     // const rta = await this.pool.query(query);
-    const [data] = await sequialize.query(query);
+    const [data] = await sequelize.query(query);
     if(data.length === 0){
       throw boom.notFound('Lista de Productos VACIA - FIND ALL');
     }
