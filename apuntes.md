@@ -68,3 +68,49 @@
 - Se agrega el archivo yml que será la configuración del contenedor - se especifica el path que indica la pagina hub.docker.com para esta imagen
 - Se crea la carpeta dónde se alojará la data (bd - postgres)
 - Se corre el servicio docker-compose up -d postgres
+- Se abre el localhost dónde está corriendo pgadmin y se ingresan los datos de un nuevo servidor, la ip es el nombre del servicio de postgres ya que cuando se destruye el contenedor se cambia la ip
+- Se hace una query de creación de una tabla de prueba
+CREATE TABLE task(
+   id serial PRIMARY KEY,
+	title varchar(255) NOT NULL,
+	completed boolean DEFAULT false
+);
+y se ingresaran datos manualmente a la tabla
+- Se instala la librería de node-postgres npm i pg
+- Se conecta docker a nodejs con la librería node-postgres
+- Se crea una carpeta de libs y se crean los archivos de conexion el cual se exportará su función
+- Se crea otro archivo de pool de conexiones y se empieza a usar en los servicios agregando el pool al constructor de la clase
+- Se empieza a implementar en los métodos ej. en el de productos para que no haga un fake sino que haga un query
+
+### Practica en pgadmin
+- Creamos la tabla productos
+CREATE TABLE products(
+	id serial PRIMARY KEY,
+	name varchar(100) not null,
+	price integer not null,
+	image varchar(250) not null,
+  isBlock boolean not null
+);
+- Hacemos pruebas con tabla vacia y con productos a través de insomnia
+  - {
+	"statusCode": 404,
+	"error": "Not Found",
+	"message": "Lista de Productos VACIA - FIND ALL"
+  }
+  - [
+	{
+		"id": 1,
+		"name": "Awesome shoes",
+		"price": 150,
+		"image": "http://milocal.com"
+	},
+	{
+		"id": 2,
+		"name": "Beaty roses",
+		"price": 15,
+		"image": "http://local.ar"
+	}
+  ]  
+
+- Modificar los servicios por cada tabla (pendiente users, facturas, etc)
+

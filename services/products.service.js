@@ -1,11 +1,14 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
+const pool = require('../libs/postgres.pool');
 
 class ProductsService {
 
   constructor(){
     this.products = [];
     this.generate();
+    this.pool = pool;
+    this.pool.on('error', (err) => console.log(err));
   }
 
   generate(){
@@ -36,44 +39,53 @@ class ProductsService {
   }
 
   async find(){
-    const products = this.products;
-    if(!products){
-      throw boom.notFound('Productos NO ENCONTRADOS - FIND ALL');
+    const query = 'SELECT * FROM products';
+    const rta = await this.pool.query(query);
+    if(rta.rowCount === 0){
+      throw boom.notFound('Lista de Productos VACIA - FIND ALL');
     }
-    return products;
+    return rta.rows;
   }
 
   async findOne(id){
-    const product = this.products.find(element => element.id === id);
-    if(!product){
+    const query = `SELECT * FROM products WHERE id=${id}`;
+    const rta = await this.pool.query(query);
+    if(rta.rowCount === 0){
       throw boom.notFound('Producto NO ENCONTRADO - FIND ONE BY ID');
     }
-    if(product.isBlock){
+    if(rta.rows[0]['isblock'] === true){
       throw boom.conflict('Producto BLOQUEADO - FIND ONE BY ID');
     }
-    return product;
+    return rta.rows;
   }
 
   async update(id, body){
-    const index = this.products.findIndex(item => item.id === id);
-    if(index === -1){
+    const { name, price, image, isBlock } = body;
+    const query = `UPDATE products SET name = '${name}', price = ${price}, image = '${image}', isblock = ${isBlock} WHERE id = ${id};`;
+
+    const rta = await this.pool.query(query);
+
+    if(rta.rowCount === 0){
       throw boom.notFound('Producto NO ENCONTRADO - UPDATE');
     }
-    const product = this.products[index];
-    this.products[index] = {
-      ...product,
-      ...body
+    return {
+      id,
+      message: 'Producto ACTUALIZADO CON EXITO',
+      ...body,
     };
-    return this.products[index];
   }
 
   async delete(id){
-    const index = this.products.findIndex(item => item.id === id);
-    if(index === -1){
+    const query = `DELETE FROM products WHERE id = ${id}`;
+    const rta = await this.pool.query(query);
+    if(rta.rowCount === 0){
       throw boom.notFound('Producto NO ENCONTRADO - DELETE');
+    }else{
+      return {
+        id: id,
+        message: 'Producto BORRADO CON EXITO',
+      }
     }
-    this.products.splice(index, 1);
-    return { id };
   }
 }
 

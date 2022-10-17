@@ -7,7 +7,8 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint",
-    "compose": "docker-compose up -d postgres"
+    "postgres": "docker-compose up -d postgres",
+    "pgadmin": "docker-compose up -d pgadmin"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +26,8 @@
     "docker-compose": "^0.23.17",
     "express": "^4.18.2",
     "faker": "^5.5.3",
-    "joi": "^17.6.3"
+    "joi": "^17.6.3",
+    "pg": "^8.8.0"
   },
   "engines": {
     "node": "16.17.1"
