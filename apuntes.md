@@ -151,8 +151,17 @@ CREATE TABLE products(
 - Se instala la libreria sequelize-cli como dependencia de desarrollo npm i sequelize-cli --save-dev
 - Agregamos un archivo en la raíz del proyecto que será la configuración de sequelize denominado .sequelizerc, este nos permitirá correr un sistema de migraciones, se ocnfigura dónde están los sets de datos, dónde serán guardadas todas las migraciones que se van a generar.
 - Creamos en db dos carpetas seeders y migrations y un archivo config.js cuya configuración se reutilizará algnas lineas de sequelize , se exporta por modulo las dos configuraciones para desarrollo y la otra para producción(aún no terminada).
-- 
-
+- Configuramos en el package.json una nueva tarea migrations:generate
+- Corremos en consola la tarea y le asignamos un nombre especifico ej create-users
+- Esta tarea generará en la carpeta migrations un nuevo archivo un template o modelo de migración, al cual le debemos indicar 
+- Se le debe indicar al sequelize que debe dejar de sincronizar, eliminando la linea sequelize.sync()
+- Al nuevo archivo de migraciones se le agrega la logica de creado así como de borrado, se pueden incorporar más tablas 
+- Creamos otro comando para correr sequelize y las migraciones que están alojadas en la carpeta migration db:migrate
+- Hay otro comando con el que se puede hacer un roll-back db:migrate:undo
+- Existe un comando peligroso para borrar todo db:migrate:all
+- Para probar las migraciones debemos ir al pgadmin y borrar las dos tablas de la base de datos my_store
+- Debido a que eliminamos la sincronizacion de sequelize debemos ejecutar los comandos alias para que se generen las tablas a través de las migraciones ya configuradas, de esta forma tenemos el control de lo que está pasando.
+- Vamos a consola y corremos la tarea npm run migrations:run
 
 #### tareas por hacer 
 [] Hacer los esquemas de validacion para las otras tablas
