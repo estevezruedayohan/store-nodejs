@@ -7,8 +7,8 @@ const PASSWORD = encodeURIComponent(config.dbPassword);
 module.exports = {
   development: {
     // url: URI,
-    username: `${USER}`,
-    password: `${PASSWORD}`,
+    username: config.dbUser,
+    password: config.dbPassword,
     database: config.dbName,
     host: config.dbHost,
     port: config.dbPort,
